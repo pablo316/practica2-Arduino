@@ -1,0 +1,25 @@
+10-04-2017
+el profesor indica el tema a trabajar y las instrucciones para conectar el arduino.
+se leen los documentos que entrega el profesor para estudiar arduino.
+se instalan los programas necesarios para comenzar a programar en arduino.
+se programa una comunicacion de prueba entre un motor y el sensor de proximidad.
+
+12-04-2017
+se continua programando la funcionalidad del servomotor continuo.
+se crea un programa para que el motor se mueva en una direccion dada a traves del teclado
+del computador, se crean 2 programas para ingresar char y entero.
+
+probar los sensores de humedad y temperatura (abiente y suelo), programar en arduino ara mostrar datos en pantalla.
+
+probar sensor bluetooth y cableado para verificar su correcta funcionalidad.
+
+comenzar la programacion de aplicacion anroid para conectar arduino con dispositivo móvil, crear programa simple
+para controlar led, botones de encendido y apagado.
+
+comenzar a programar aplicacion en android para recibir datos de sensores de humedad de suelo.
+
+conectar sensor de humedad de suelo a un vaso para calibrar el rango de medición.
+
+programar y probar la conexión de 2 sensores de humedad de suelo para enviar datos.
+
+programar ventana para el control del robot esclavo y sus motores en android.
