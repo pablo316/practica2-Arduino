@@ -1,0 +1,28 @@
+<?php
+    define('MYSQL_HOST'    , 'localhost'     );
+    define('MYSQL_DBNAME'  , 'base_de_datos' );
+    define('MYSQL_USUARIO' , 'usuario'       );
+    define('MYSQL_PASSWORD', 'contraseña'    );
+
+    if( isset($_GET["var"]) )
+    {
+        date_default_timezone_set('Europe/Madrid');
+        try
+        {
+            $conexion = new PDO("mysql:host=" . MYSQL_HOST . ";dbname=" . MYSQL_DBNAME, MYSQL_USUARIO, MYSQL_PASSWORD);
+
+            $stmt = $conexion->prepare("INSERT INTO arduino(datetime, valor) VALUES (?,?);");
+            $stmt->bindParam(1, date('Y/m/d H:i:s', time()) );
+            $stmt->bindParam(2, $_GET["var"] );
+
+            echo $stmt->execute() ? $conexion->lastInsertId() : -1;
+            $conexion = null;
+        }
+        catch( Exception $e )
+        {
+            if( $conexion != null )
+                $conexion = null;
+            echo $e->getMessage();
+        }
+    }
+?>
