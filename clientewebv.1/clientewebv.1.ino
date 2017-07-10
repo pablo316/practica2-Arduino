@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 SoftwareSerial SerialESP8266(10,11); // RX, TX
 
-String server = "direccion servidor";
+String server ="www.cloudima.ubiobio.cl";
 
 //variables para enviar al servidor
 int variable1=364;
@@ -11,8 +11,8 @@ String cadena="";
 
 void setup() {
 
-  SerialESP8266.begin(9600);
-  Serial.begin(9600);
+  SerialESP8266.begin(115200);
+  Serial.begin(115200);
   SerialESP8266.setTimeout(2000);
   
   //Verificamos si el ESP8266 responde
@@ -30,7 +30,7 @@ void setup() {
       Serial.println("ESP8266 en modo Estacion");
       
     //Nos conectamos a una red wifi 
-    SerialESP8266.println("AT+CWJAP=\"nombre_red\",\"contraseña\"");
+    SerialESP8266.println("AT+CWJAP=\"i-wifi-U\",\"soporte+dci\"");
     Serial.println("Conectandose a la red ...");
     SerialESP8266.setTimeout(10000); //Aumentar si demora la conexion
     if(SerialESP8266.find("OK"))
@@ -56,6 +56,8 @@ void loop() {
 
     variable1=analogRead(A0);
     variable2=3.14;
+    int variable3=3.15;
+    int variable4=3.16;
     //otras operaciones
     // . . . 
   
@@ -64,7 +66,7 @@ void loop() {
   
       //Nos conectamos con el servidor:
       
-      SerialESP8266.println("AT+CIPSTART=\"TCP\",\"" + server + "\",80");
+      SerialESP8266.println("AT+CIPSTART=\"TCP\",\""+server+"\",81");
       if( SerialESP8266.find("OK"))
       {  
           Serial.println();
@@ -72,10 +74,10 @@ void loop() {
           Serial.println();
           Serial.println("ESP8266 conectado con el servidor...");             
     
-          //Armamos el encabezado de la peticion http
-          String peticionHTTP= "GET /php/ejemplos/ej10destino.php?a=";
-          peticionHTTP=peticionHTTP+String(variable1)+"&b="+String(variable2)+" HTTP/1.1\r\n";
-          peticionHTTP=peticionHTTP+"Host: direccion servidor\r\n\r\n";
+          //Armamos el encabezado de la peticion http  invernadero/invernadero_cim.php
+          String peticionHTTP= "GET /invernadero/invernadero_cim.php?sh1=";
+          peticionHTTP=peticionHTTP+String(variable1)+"&sh2="+String(variable2)+"&temperatura_ambiente="+String(variable3)+"&humedad_ambiente="+String(variable4)+" HTTP/1.1\r\n";
+          peticionHTTP=peticionHTTP+"Host: www.cloudima.ubiobio.cl\r\n\r\n";
     
           //Enviamos el tamaño en caracteres de la peticion http:  
           SerialESP8266.print("AT+CIPSEND=");
