@@ -1,7 +1,7 @@
 #include <DHT11.h>
 #include <Wire.h>
 
-
+// sensores que vamos a utilizar(3 sensores de humedad de suelo + 1 sensor de temperatura y humedad ambiente)
 int Lectura_Analogica1 = 0;
 int Lectura_Analogica2 = 0;
 int Lectura_Analogica3 = 0;
@@ -17,7 +17,7 @@ int vcc3= 4;
 int SensorHumedad1[2] = {0, 0};
 int SensorHumedad2[2] = {0, 0};
 int SensorHumedad3[2] = {0, 0};
-char inbyte = 0; //Char para leer el led.
+char inbyte = 0; //leer el dato recibido desde el monitor serial o bluetooth.
 
 void setup() {
   Serial.begin(9600);
@@ -25,7 +25,7 @@ void setup() {
   digitalWrite(vcc1, HIGH);
   digitalWrite(vcc2, HIGH);
   digitalWrite(vcc3, HIGH);
-  Serial.println("Sensores Energizados");
+  Serial.println("Sensores Energizados");//mensaje por monitor para indicar que se inicio correctamente
 }
 
 void loop() {
@@ -55,7 +55,7 @@ Lectura_Analogica3 = analogRead(A4); //Leer el valor del potenciómetro(sensor d
   //preguntar si hay un serial(bluetooth) conectado .
   if (Serial.available() > 0) {
     inbyte = Serial.read();
-    //preguntar si el serial(bluetooth) esta solicitando el envio de datos.
+    //preguntar si el serial(bluetooth o monitor) esta solicitando el envio de datos.
     if (inbyte == '2')//pidiendo datos
     {
       SensorHumedad1[0] = 1;
@@ -67,15 +67,15 @@ Lectura_Analogica3 = analogRead(A4); //Leer el valor del potenciómetro(sensor d
   
   //llama funcion de envio de datos.
   sendAndroidValues();
-  delay(3000);
+  delay(3000);// mientras "inbyte" sea 2 se actualizaran los valores de las lecturas cada 3 seg, 
 }
 
 
-//enviar los valores  por el modulo Bluetooth a Android.
+//enviar los valores  por el modulo Bluetooth o por monitor.
 void sendAndroidValues() {
 
   if (SensorHumedad1[0] == 1 || SensorHumedad2[0] == 1|| SensorHumedad3[0] == 1 ) {
-    Serial.println(' '); //con esto damos a conocer la finalización del String de datos.
+    Serial.println(' '); //con esto damos a conocer el inicio del String de datos.
   }
 
   if (SensorHumedad1[0] == 1) {
@@ -93,10 +93,12 @@ void sendAndroidValues() {
     Serial.println(SensorHumedad3[1]);
 
   }
+  //calculamos la humedad y temperatura del ambiente
   int err;
   float temp, humi;
   if((err=dht11.read(humi, temp))==0&&(SensorHumedad1[0] == 1 || SensorHumedad2[0] == 1|| SensorHumedad3[0] == 1 ))
   {
+    //enviamos los datos a traves del Serial
     Serial.print("Temperatura:");
     Serial.print(temp);
     Serial.print(" Humedad:");
@@ -109,5 +111,5 @@ void sendAndroidValues() {
   if (SensorHumedad1[0] == 1 || SensorHumedad2[0] == 1|| SensorHumedad3[0] == 1) {
     Serial.print('~'); //con esto damos a conocer la finalización del String de datos.
   }
-  delay(10);        //agregamos este delay para eliminar tramisiones faltantes.
+  delay(10);        
 }
