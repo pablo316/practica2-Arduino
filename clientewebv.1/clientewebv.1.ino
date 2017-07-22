@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 SoftwareSerial SerialESP8266(10,11); // RX, TX
 
-String server ="www.cloudima.ubiobio.cl";
+String server ="www.cloudima.ubiobio.cl";//direccion del servidor
 
 //variables para enviar al servidor
 int variable1=364;
@@ -78,6 +78,7 @@ void loop() {
           String peticionHTTP= "GET /invernadero/invernadero_cim.php?sh1=";
           peticionHTTP=peticionHTTP+String(variable1)+"&sh2="+String(variable2)+"&temperatura_ambiente="+String(variable3)+"&humedad_ambiente="+String(variable4)+" HTTP/1.1\r\n";
           peticionHTTP=peticionHTTP+"Host: www.cloudima.ubiobio.cl\r\n\r\n";
+          //direccion del servidor
     
           //Enviamos el tamaño en caracteres de la peticion http:  
           SerialESP8266.print("AT+CIPSEND=");
