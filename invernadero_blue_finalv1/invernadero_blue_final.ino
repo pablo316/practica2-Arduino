@@ -93,7 +93,7 @@ void sendAndroidValues() {
     Serial.println(SensorHumedad3[1]);
 
   }
-  //calculamos la humedad y temperatura del ambiente
+  //calculamos la humedad y temperatura del ambiente DTH11
   int err;
   float temp, humi;
   if((err=dht11.read(humi, temp))==0&&(SensorHumedad1[0] == 1 || SensorHumedad2[0] == 1|| SensorHumedad3[0] == 1 ))
