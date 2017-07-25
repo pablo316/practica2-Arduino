@@ -1,1 +1,0 @@
-botones para recibir datos y un layout para mostrarlos por pantalla y guardar en txt(delay de 5 seg) otra pantalla para control motor
